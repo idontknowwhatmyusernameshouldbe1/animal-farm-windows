@@ -18,20 +18,23 @@ After deploy, open:
 
 1. Create a GitHub repo named **`animal-farm-windows`** (must match for the default Pages URL).
 2. Push this folder to that repo (`main` or `master`).
-3. Repo **Settings → Pages**:
-   - **Source:** GitHub Actions
-4. Wait for the **Deploy Windows download site** workflow to finish.
+3. Wait for the **Deploy Windows download site** workflow to finish once (it creates the `gh-pages` branch).
+4. Repo **Settings → Pages**:
+   - **Source:** Deploy from a branch
+   - **Branch:** `gh-pages` / `/ (root)`
 5. Open the Pages URL and use **Download for Windows**.
 
 Update the “Web gallery” link in [`site/index.html`](site/index.html) if your GitHub username differs.
 
 ## What the workflow builds
 
-On every push, GitHub Actions (Windows runner):
+On every push to `main`, GitHub Actions (Windows runner):
 
 1. Publishes a **self-contained win-x64** build (no separate .NET install for users)
 2. Zips it to `AnimalFarm-Windows.zip`
-3. Deploys the `site/` folder (landing page + zip) to GitHub Pages
+3. Pushes the `site/` folder (landing page + zip) to the **`gh-pages`** branch
+
+GitHub Pages then serves that branch.
 
 ## Preview the landing page locally
 
