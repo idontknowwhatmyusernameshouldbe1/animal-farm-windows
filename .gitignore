@@ -1,0 +1,10 @@
+.vs/
+*.user
+*.suo
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+artifacts/
+site/AnimalFarm-Windows.zip
+publish/
+.DS_Store

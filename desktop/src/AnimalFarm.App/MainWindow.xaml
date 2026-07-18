@@ -1,0 +1,56 @@
+﻿<Window x:Class="AnimalFarm.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="{Binding Title}"
+        Height="820"
+        Width="1100"
+        MinHeight="640"
+        MinWidth="760"
+        WindowStartupLocation="CenterScreen"
+        Background="#D8E4DC"
+        FontFamily="{StaticResource BodyFont}">
+    <Window.Resources>
+        <LinearGradientBrush x:Key="AppBackground" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#E8F0EA" Offset="0" />
+            <GradientStop Color="#D4E2D8" Offset="0.45" />
+            <GradientStop Color="#B9CEC0" Offset="1" />
+        </LinearGradientBrush>
+    </Window.Resources>
+
+    <Grid Background="{StaticResource AppBackground}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0"
+                Background="{StaticResource HeaderBrush}"
+                BorderBrush="{StaticResource LineBrush}"
+                BorderThickness="0,0,0,1"
+                Padding="24,16">
+            <DockPanel LastChildFill="False">
+                <Button DockPanel.Dock="Left"
+                        Content="{Binding Localization.T.Brand}"
+                        Command="{Binding GoHomeCommand}"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        FontFamily="{StaticResource DisplayFont}"
+                        FontSize="22"
+                        FontWeight="Bold"
+                        Foreground="{StaticResource InkBrush}"
+                        Padding="0" />
+                <Button DockPanel.Dock="Right"
+                        Style="{StaticResource LangButton}"
+                        Content="{Binding Localization.T.LangToggle}"
+                        ToolTip="{Binding Localization.T.LangToggleAria}"
+                        Command="{Binding ToggleLanguageCommand}" />
+            </DockPanel>
+        </Border>
+
+        <Frame x:Name="RootFrame"
+               Grid.Row="1"
+               NavigationUIVisibility="Hidden"
+               JournalOwnership="OwnsJournal" />
+    </Grid>
+</Window>

@@ -1,0 +1,62 @@
+name: Deploy Windows download site
+
+on:
+  push:
+    branches: ["main", "master"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Publish Animal Farm (self-contained win-x64)
+        run: |
+          dotnet publish desktop/src/AnimalFarm.App/AnimalFarm.App.csproj `
+            -c Release `
+            -r win-x64 `
+            --self-contained true `
+            -p:PublishSingleFile=false `
+            -o artifacts/AnimalFarm
+
+      - name: Zip release
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path site | Out-Null
+          if (Test-Path site/AnimalFarm-Windows.zip) {
+            Remove-Item site/AnimalFarm-Windows.zip -Force
+          }
+          Compress-Archive -Path artifacts/AnimalFarm/* -DestinationPath site/AnimalFarm-Windows.zip -Force
+          Get-Item site/AnimalFarm-Windows.zip | Format-List Name, Length
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

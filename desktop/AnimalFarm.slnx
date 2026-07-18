@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/AnimalFarm.App/AnimalFarm.App.csproj" />
+    <Project Path="src/AnimalFarm.Core/AnimalFarm.Core.csproj" />
+  </Folder>
+</Solution>

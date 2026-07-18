@@ -1,0 +1,72 @@
+<Page x:Class="AnimalFarm.App.Views.PetDetailPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Background="Transparent">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="28,24,28,40">
+        <StackPanel MaxWidth="820" HorizontalAlignment="Center">
+            <Button Style="{StaticResource SecondaryButton}"
+                    Content="{Binding Localization.T.BackToFarm}"
+                    Command="{Binding BackCommand}"
+                    HorizontalAlignment="Left"
+                    Margin="0,0,0,20" />
+
+            <StackPanel Visibility="{Binding NotFound, Converter={StaticResource NullToVisibility}}">
+                <TextBlock Text="{Binding Localization.T.PetNotFound}"
+                           FontFamily="{StaticResource DisplayFont}"
+                           FontSize="36"
+                           FontWeight="Bold"
+                           Foreground="{StaticResource InkBrush}" />
+                <TextBlock Text="{Binding Localization.T.PetNotFoundSub}"
+                           FontSize="16"
+                           Foreground="{StaticResource MutedBrush}"
+                           Margin="0,8,0,0"
+                           TextWrapping="Wrap" />
+            </StackPanel>
+
+            <Grid>
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Visibility" Value="Visible" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding NotFound}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <StackPanel>
+                    <Border Background="{StaticResource ImageFallbackBrush}"
+                            CornerRadius="22"
+                            ClipToBounds="True"
+                            Height="420"
+                            Margin="0,0,0,20">
+                        <Image Source="{Binding Image}" Stretch="UniformToFill" />
+                    </Border>
+
+                    <TextBlock Text="{Binding Name}"
+                               FontFamily="{StaticResource DisplayFont}"
+                               FontSize="40"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource InkBrush}"
+                               TextWrapping="Wrap" />
+                    <TextBlock Text="{Binding DisplayDescription}"
+                               FontSize="17"
+                               Foreground="{StaticResource InkSoftBrush}"
+                               TextWrapping="Wrap"
+                               Margin="0,10,0,24" />
+
+                    <StackPanel Orientation="Horizontal">
+                        <Button Style="{StaticResource PrimaryButton}"
+                                Content="{Binding Localization.T.Edit}"
+                                Command="{Binding EditCommand}"
+                                Margin="0,0,12,0" />
+                        <Button Style="{StaticResource DangerButton}"
+                                Content="{Binding DeleteLabel}"
+                                Command="{Binding DeleteCommand}"
+                                IsEnabled="{Binding IsDeleting, Converter={StaticResource InverseBool}}" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</Page>
