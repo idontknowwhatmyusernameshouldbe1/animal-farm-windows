@@ -19,10 +19,11 @@ After deploy, open:
 1. Create a GitHub repo named **`animal-farm-windows`** (must match for the default Pages URL).
 2. Push this folder to that repo (`main` or `master`).
 3. Wait for the **Deploy Windows download site** workflow to finish once (it creates the `gh-pages` branch).
-4. Repo **Settings → Pages**:
+4. If the deploy step fails quickly, set **Settings → Actions → General → Workflow permissions** to **Read and write permissions**, then re-run the workflow.
+5. Repo **Settings → Pages**:
    - **Source:** Deploy from a branch
    - **Branch:** `gh-pages` / `/ (root)`
-5. Open the Pages URL and use **Download for Windows**.
+6. Open the Pages URL and use **Download for Windows**.
 
 Update the “Web gallery” link in [`site/index.html`](site/index.html) if your GitHub username differs.
 
