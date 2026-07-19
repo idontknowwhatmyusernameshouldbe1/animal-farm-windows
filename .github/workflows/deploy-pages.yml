@@ -41,15 +41,25 @@ jobs:
         run: |
           New-Item -ItemType Directory -Force -Path site/releases | Out-Null
           git fetch origin gh-pages --depth=1 2>$null
-          if ($LASTEXITCODE -eq 0) {
-            git checkout origin/gh-pages -- releases versions.json 2>$null
-            if (Test-Path releases) {
-              Copy-Item -Path releases/* -Destination site/releases/ -Force -ErrorAction SilentlyContinue
-            }
-            if (Test-Path versions.json) {
-              Copy-Item versions.json site/versions.json -Force
-            }
+          if ($LASTEXITCODE -ne 0) {
+            Write-Host "No gh-pages branch to preserve from (first deploy or fetch failed)."
+            exit 0
           }
+
+          # Paths may not exist on older gh-pages trees — never fail the job.
+          git checkout origin/gh-pages -- releases 2>$null
+          git checkout origin/gh-pages -- versions.json 2>$null
+
+          if (Test-Path releases) {
+            Copy-Item -Path releases/* -Destination site/releases/ -Force -ErrorAction SilentlyContinue
+            Write-Host "Restored release files from gh-pages."
+          }
+          if (Test-Path versions.json) {
+            Copy-Item versions.json site/versions.json -Force
+            Write-Host "Restored versions.json from gh-pages."
+          }
+
+          exit 0
 
       - name: Publish Animal Farm (self-contained win-x64)
         run: |
