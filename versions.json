@@ -1,10 +1,15 @@
 {
   "versions": [
     {
+      "version": "1.1.1",
+      "file": "releases/AnimalFarm-Windows-1.1.1.zip",
+      "label": "1.1.1"
+    },
+    {
       "version": "1.1.0",
       "file": "releases/AnimalFarm-Windows-1.1.0.zip",
       "label": "1.1.0"
     }
   ],
-  "latest": "1.1.0"
+  "latest": "1.1.1"
 }
