@@ -9,8 +9,8 @@
     <ApplicationTitle>Animal Farm</ApplicationTitle>
     <RootNamespace>AnimalFarm.App</RootNamespace>
     <AssemblyName>AnimalFarm</AssemblyName>
-    <Version>1.1.0</Version>
-    <InformationalVersion>1.1.0</InformationalVersion>
+    <Version>1.1.1</Version>
+    <InformationalVersion>1.1.1</InformationalVersion>
   </PropertyGroup>
 
   <ItemGroup>
