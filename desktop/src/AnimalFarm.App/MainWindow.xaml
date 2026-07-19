@@ -7,25 +7,17 @@
         MinHeight="640"
         MinWidth="760"
         WindowStartupLocation="CenterScreen"
-        Background="#D8E4DC"
+        Background="{DynamicResource BgBaseBrush}"
         FontFamily="{StaticResource BodyFont}">
-    <Window.Resources>
-        <LinearGradientBrush x:Key="AppBackground" StartPoint="0,0" EndPoint="1,1">
-            <GradientStop Color="#E8F0EA" Offset="0" />
-            <GradientStop Color="#D4E2D8" Offset="0.45" />
-            <GradientStop Color="#B9CEC0" Offset="1" />
-        </LinearGradientBrush>
-    </Window.Resources>
-
-    <Grid Background="{StaticResource AppBackground}">
+    <Grid Background="{DynamicResource AppBackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Border Grid.Row="0"
-                Background="{StaticResource HeaderBrush}"
-                BorderBrush="{StaticResource LineBrush}"
+                Background="{DynamicResource HeaderBrush}"
+                BorderBrush="{DynamicResource LineBrush}"
                 BorderThickness="0,0,0,1"
                 Padding="24,16">
             <DockPanel LastChildFill="False">
@@ -38,13 +30,19 @@
                         FontFamily="{StaticResource DisplayFont}"
                         FontSize="22"
                         FontWeight="Bold"
-                        Foreground="{StaticResource InkBrush}"
+                        Foreground="{DynamicResource InkBrush}"
                         Padding="0" />
-                <Button DockPanel.Dock="Right"
-                        Style="{StaticResource LangButton}"
-                        Content="{Binding Localization.T.LangToggle}"
-                        ToolTip="{Binding Localization.T.LangToggleAria}"
-                        Command="{Binding ToggleLanguageCommand}" />
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                    <Button Style="{StaticResource LangButton}"
+                            Content="{Binding ThemeToggleLabel}"
+                            ToolTip="{Binding ThemeToggleAria}"
+                            Command="{Binding ToggleThemeCommand}" />
+                    <Button Style="{StaticResource LangButton}"
+                            Content="{Binding Localization.T.LangToggle}"
+                            ToolTip="{Binding Localization.T.LangToggleAria}"
+                            Command="{Binding ToggleLanguageCommand}"
+                            Margin="0" />
+                </StackPanel>
             </DockPanel>
         </Border>
 

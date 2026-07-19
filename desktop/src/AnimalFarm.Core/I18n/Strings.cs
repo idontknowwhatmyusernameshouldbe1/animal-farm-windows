@@ -5,6 +5,10 @@ public sealed class Strings
     public required string Brand { get; init; }
     public required string LangToggle { get; init; }
     public required string LangToggleAria { get; init; }
+    public required string ThemeToDark { get; init; }
+    public required string ThemeToLight { get; init; }
+    public required string ThemeToDarkAria { get; init; }
+    public required string ThemeToLightAria { get; init; }
     public required string HeroCopy { get; init; }
     public required string AddPet { get; init; }
     public required string LoadingFarm { get; init; }

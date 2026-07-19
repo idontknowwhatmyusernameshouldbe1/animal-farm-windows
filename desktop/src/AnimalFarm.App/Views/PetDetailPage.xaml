@@ -15,10 +15,10 @@
                            FontFamily="{StaticResource DisplayFont}"
                            FontSize="36"
                            FontWeight="Bold"
-                           Foreground="{StaticResource InkBrush}" />
+                           Foreground="{DynamicResource InkBrush}" />
                 <TextBlock Text="{Binding Localization.T.PetNotFoundSub}"
                            FontSize="16"
-                           Foreground="{StaticResource MutedBrush}"
+                           Foreground="{DynamicResource MutedBrush}"
                            Margin="0,8,0,0"
                            TextWrapping="Wrap" />
             </StackPanel>
@@ -35,7 +35,7 @@
                     </Style>
                 </Grid.Style>
                 <StackPanel>
-                    <Border Background="{StaticResource ImageFallbackBrush}"
+                    <Border Background="{DynamicResource ImageFallbackBrush}"
                             CornerRadius="22"
                             ClipToBounds="True"
                             Height="420"
@@ -47,11 +47,11 @@
                                FontFamily="{StaticResource DisplayFont}"
                                FontSize="40"
                                FontWeight="Bold"
-                               Foreground="{StaticResource InkBrush}"
+                               Foreground="{DynamicResource InkBrush}"
                                TextWrapping="Wrap" />
                     <TextBlock Text="{Binding DisplayDescription}"
                                FontSize="17"
-                               Foreground="{StaticResource InkSoftBrush}"
+                               Foreground="{DynamicResource InkSoftBrush}"
                                TextWrapping="Wrap"
                                Margin="0,10,0,24" />
 

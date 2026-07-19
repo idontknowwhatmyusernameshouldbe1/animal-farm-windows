@@ -26,6 +26,31 @@ jobs:
         with:
           dotnet-version: "10.0.x"
 
+      - name: Read app version
+        id: ver
+        shell: pwsh
+        run: |
+          [xml]$csproj = Get-Content desktop/src/AnimalFarm.App/AnimalFarm.App.csproj
+          $version = $csproj.Project.PropertyGroup.Version | Where-Object { $_ } | Select-Object -First 1
+          if (-not $version) { $version = "1.0.0" }
+          "version=$version" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+          Write-Host "App version: $version"
+
+      - name: Preserve previous releases from gh-pages
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path site/releases | Out-Null
+          git fetch origin gh-pages --depth=1 2>$null
+          if ($LASTEXITCODE -eq 0) {
+            git checkout origin/gh-pages -- releases versions.json 2>$null
+            if (Test-Path releases) {
+              Copy-Item -Path releases/* -Destination site/releases/ -Force -ErrorAction SilentlyContinue
+            }
+            if (Test-Path versions.json) {
+              Copy-Item versions.json site/versions.json -Force
+            }
+          }
+
       - name: Publish Animal Farm (self-contained win-x64)
         run: |
           dotnet publish desktop/src/AnimalFarm.App/AnimalFarm.App.csproj `
@@ -35,15 +60,42 @@ jobs:
             -p:PublishSingleFile=false `
             -o artifacts/AnimalFarm
 
-      - name: Zip release
+      - name: Zip release + update versions.json
         shell: pwsh
         run: |
-          New-Item -ItemType Directory -Force -Path site | Out-Null
-          if (Test-Path site/AnimalFarm-Windows.zip) {
-            Remove-Item site/AnimalFarm-Windows.zip -Force
+          $version = "${{ steps.ver.outputs.version }}"
+          New-Item -ItemType Directory -Force -Path site/releases | Out-Null
+
+          $versioned = "site/releases/AnimalFarm-Windows-$version.zip"
+          $latest = "site/AnimalFarm-Windows.zip"
+          if (Test-Path $versioned) { Remove-Item $versioned -Force }
+          if (Test-Path $latest) { Remove-Item $latest -Force }
+
+          Compress-Archive -Path artifacts/AnimalFarm/* -DestinationPath $versioned -Force
+          Copy-Item $versioned $latest -Force
+
+          $label = "$version"
+          $manifestPath = "site/versions.json"
+          $manifest = @{ latest = $version; versions = @() }
+          if (Test-Path $manifestPath) {
+            try {
+              $existing = Get-Content $manifestPath -Raw | ConvertFrom-Json
+              if ($existing.versions) {
+                $manifest.versions = @($existing.versions | Where-Object { $_.version -ne $version })
+              }
+            } catch {}
           }
-          Compress-Archive -Path artifacts/AnimalFarm/* -DestinationPath site/AnimalFarm-Windows.zip -Force
-          Get-Item site/AnimalFarm-Windows.zip | Format-List Name, Length
+
+          $entry = [pscustomobject]@{
+            version = $version
+            file = "releases/AnimalFarm-Windows-$version.zip"
+            label = $label
+          }
+          $manifest.versions = @($entry) + @($manifest.versions)
+          $manifest | ConvertTo-Json -Depth 5 | Set-Content $manifestPath -Encoding utf8
+
+          Get-Item $versioned, $latest | Format-List Name, Length
+          Get-Content $manifestPath
 
       - name: Deploy site to gh-pages
         uses: peaceiris/actions-gh-pages@v4
@@ -51,4 +103,5 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./site
           publish_branch: gh-pages
-          force_orphan: true
+          force_orphan: false
+          keep_files: true

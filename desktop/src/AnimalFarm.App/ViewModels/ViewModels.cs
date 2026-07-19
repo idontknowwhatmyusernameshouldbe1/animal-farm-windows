@@ -15,26 +15,39 @@ public sealed partial class MainViewModel : ObservableObject
     private readonly SettingsService _settings;
     private readonly NavigationService _navigation;
     private readonly PageFactory _pages;
+    private readonly ThemeService _theme;
 
     public MainViewModel(
         LocalizationService localization,
         SettingsService settings,
         NavigationService navigation,
-        PageFactory pages)
+        PageFactory pages,
+        ThemeService theme)
     {
         Localization = localization;
         _settings = settings;
         _navigation = navigation;
         _pages = pages;
+        _theme = theme;
 
         Localization.Language = _settings.LoadLanguage();
+        _theme.Apply(_settings.LoadTheme());
+
         Localization.PropertyChanged += (_, args) =>
         {
             if (args.PropertyName is nameof(LocalizationService.Language) or nameof(LocalizationService.T))
             {
                 _settings.SaveLanguage(Localization.Language);
                 OnPropertyChanged(nameof(Title));
+                OnPropertyChanged(nameof(ThemeToggleLabel));
+                OnPropertyChanged(nameof(ThemeToggleAria));
             }
+        };
+
+        _theme.ThemeChanged += (_, _) =>
+        {
+            OnPropertyChanged(nameof(ThemeToggleLabel));
+            OnPropertyChanged(nameof(ThemeToggleAria));
         };
     }
 
@@ -42,8 +55,25 @@ public sealed partial class MainViewModel : ObservableObject
 
     public string Title => Localization.T.Brand;
 
+    public string ThemeToggleLabel =>
+        _theme.Current == AppTheme.Dark
+            ? Localization.T.ThemeToLight
+            : Localization.T.ThemeToDark;
+
+    public string ThemeToggleAria =>
+        _theme.Current == AppTheme.Dark
+            ? Localization.T.ThemeToLightAria
+            : Localization.T.ThemeToDarkAria;
+
     [RelayCommand]
     private void ToggleLanguage() => Localization.Toggle();
+
+    [RelayCommand]
+    private void ToggleTheme()
+    {
+        _theme.Toggle();
+        _settings.SaveTheme(_theme.Current);
+    }
 
     [RelayCommand]
     private void GoHome() => _navigation.ClearHistoryAndNavigate(_pages.CreateHome());

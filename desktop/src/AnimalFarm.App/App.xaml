@@ -18,13 +18,21 @@
         <SolidColorBrush x:Key="LineBrush" Color="#1A0E1712" />
         <SolidColorBrush x:Key="HeaderBrush" Color="#B8E8F0EA" />
         <SolidColorBrush x:Key="ImageFallbackBrush" Color="#9EB5A6" />
+        <SolidColorBrush x:Key="SecondaryHoverBrush" Color="#E8FFFFFF" />
+        <SolidColorBrush x:Key="PrimaryForegroundBrush" Color="#F4FFF9" />
+        <SolidColorBrush x:Key="BgBaseBrush" Color="#D8E4DC" />
+        <LinearGradientBrush x:Key="AppBackgroundBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#E8F0EA" Offset="0" />
+            <GradientStop Color="#D4E2D8" Offset="0.45" />
+            <GradientStop Color="#B9CEC0" Offset="1" />
+        </LinearGradientBrush>
 
         <FontFamily x:Key="DisplayFont">Segoe UI Variable Display, Segoe UI, sans-serif</FontFamily>
         <FontFamily x:Key="BodyFont">Segoe UI Variable Text, Segoe UI, sans-serif</FontFamily>
 
         <Style x:Key="PrimaryButton" TargetType="Button">
-            <Setter Property="Background" Value="{StaticResource AccentBrush}" />
-            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="{DynamicResource AccentBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryForegroundBrush}" />
             <Setter Property="FontFamily" Value="{StaticResource BodyFont}" />
             <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="Padding" Value="18,12" />
@@ -41,7 +49,7 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource AccentHoverBrush}" />
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource AccentHoverBrush}" />
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="Bd" Property="Opacity" Value="0.55" />
@@ -53,12 +61,12 @@
         </Style>
 
         <Style x:Key="SecondaryButton" TargetType="Button">
-            <Setter Property="Background" Value="{StaticResource SurfaceStrongBrush}" />
-            <Setter Property="Foreground" Value="{StaticResource InkBrush}" />
+            <Setter Property="Background" Value="{DynamicResource SurfaceStrongBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource InkBrush}" />
             <Setter Property="FontFamily" Value="{StaticResource BodyFont}" />
             <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="Padding" Value="18,12" />
-            <Setter Property="BorderBrush" Value="{StaticResource LineBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource LineBrush}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Template">
@@ -74,7 +82,7 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Bd" Property="Background" Value="#E8FFFFFF" />
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource SecondaryHoverBrush}" />
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="Bd" Property="Opacity" Value="0.55" />
@@ -86,18 +94,19 @@
         </Style>
 
         <Style x:Key="DangerButton" TargetType="Button" BasedOn="{StaticResource SecondaryButton}">
-            <Setter Property="Foreground" Value="{StaticResource DangerBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource DangerBrush}" />
         </Style>
 
         <Style x:Key="LangButton" TargetType="Button">
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="{StaticResource InkSoftBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource InkSoftBrush}" />
             <Setter Property="FontFamily" Value="{StaticResource BodyFont}" />
             <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="Padding" Value="12,8" />
-            <Setter Property="BorderBrush" Value="{StaticResource LineBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource LineBrush}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Margin" Value="0,0,8,0" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -116,7 +125,7 @@
         <Style x:Key="FieldLabel" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="{StaticResource BodyFont}" />
             <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="Foreground" Value="{StaticResource InkSoftBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource InkSoftBrush}" />
             <Setter Property="Margin" Value="0,0,0,8" />
         </Style>
 
@@ -124,10 +133,11 @@
             <Setter Property="FontFamily" Value="{StaticResource BodyFont}" />
             <Setter Property="FontSize" Value="15" />
             <Setter Property="Padding" Value="14,12" />
-            <Setter Property="Background" Value="{StaticResource SurfaceStrongBrush}" />
-            <Setter Property="BorderBrush" Value="{StaticResource LineBrush}" />
+            <Setter Property="Background" Value="{DynamicResource SurfaceStrongBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource LineBrush}" />
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Foreground" Value="{StaticResource InkBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource InkBrush}" />
+            <Setter Property="CaretBrush" Value="{DynamicResource InkBrush}" />
         </Style>
     </Application.Resources>
 </Application>

@@ -10,11 +10,11 @@
                        FontFamily="{StaticResource DisplayFont}"
                        FontSize="56"
                        FontWeight="Bold"
-                       Foreground="{StaticResource InkBrush}"
+                       Foreground="{DynamicResource InkBrush}"
                        Margin="0,12,0,8" />
             <TextBlock Text="{Binding Localization.T.HeroCopy}"
                        FontSize="18"
-                       Foreground="{StaticResource MutedBrush}"
+                       Foreground="{DynamicResource MutedBrush}"
                        TextWrapping="Wrap"
                        Margin="0,0,0,20"
                        MaxWidth="520"
@@ -29,15 +29,28 @@
                        FontFamily="{StaticResource DisplayFont}"
                        FontSize="22"
                        FontWeight="SemiBold"
-                       Foreground="{StaticResource InkSoftBrush}"
+                       Foreground="{DynamicResource InkSoftBrush}"
                        Margin="0,0,0,16" />
 
-            <TextBlock Text="{Binding Localization.T.EmptyFarm}"
-                       FontSize="16"
-                       Foreground="{StaticResource MutedBrush}"
-                       TextWrapping="Wrap"
-                       Visibility="{Binding IsEmpty, Converter={StaticResource NullToVisibility}}"
-                       Margin="0,8,0,0" />
+            <Border Visibility="{Binding IsEmpty, Converter={StaticResource NullToVisibility}}"
+                    Background="{DynamicResource SurfaceBrush}"
+                    BorderBrush="{DynamicResource LineBrush}"
+                    BorderThickness="1"
+                    CornerRadius="18"
+                    Padding="28,24"
+                    Margin="0,4,0,0">
+                <StackPanel>
+                    <TextBlock Text="{Binding Localization.T.EmptyFarm}"
+                               FontSize="16"
+                               Foreground="{DynamicResource MutedBrush}"
+                               TextWrapping="Wrap"
+                               Margin="0,0,0,16" />
+                    <Button Style="{StaticResource PrimaryButton}"
+                            Content="{Binding Localization.T.AddPet}"
+                            Command="{Binding AddPetCommand}"
+                            HorizontalAlignment="Left" />
+                </StackPanel>
+            </Border>
 
             <ItemsControl ItemsSource="{Binding Pets}"
                           Visibility="{Binding HasPets, Converter={StaticResource NullToVisibility}}">
@@ -48,7 +61,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type vm:PetCardViewModel}">
-                        <Button Width="280"
+                        <Button Width="240"
                                 Margin="0,0,16,16"
                                 Padding="0"
                                 BorderThickness="0"
@@ -56,33 +69,29 @@
                                 Background="Transparent"
                                 Command="{Binding DataContext.OpenPetCommand, RelativeSource={RelativeSource AncestorType=Page}}"
                                 CommandParameter="{Binding}">
-                            <Border Background="{StaticResource SurfaceStrongBrush}"
+                            <Border Background="{DynamicResource SurfaceStrongBrush}"
                                     CornerRadius="18"
-                                    BorderBrush="{StaticResource LineBrush}"
+                                    BorderBrush="{DynamicResource LineBrush}"
                                     BorderThickness="1"
                                     ClipToBounds="True">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="220" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-                                    <Border Grid.Row="0" Background="{StaticResource ImageFallbackBrush}">
+                                <Grid Width="240" Height="300">
+                                    <Border Background="{DynamicResource ImageFallbackBrush}">
                                         <Image Source="{Binding Image}" Stretch="UniformToFill" />
                                     </Border>
-                                    <StackPanel Grid.Row="1" Margin="14,12,14,14">
+                                    <Border VerticalAlignment="Bottom">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                                <GradientStop Color="#00000000" Offset="0" />
+                                                <GradientStop Color="#CC0B1018" Offset="1" />
+                                            </LinearGradientBrush>
+                                        </Border.Background>
                                         <TextBlock Text="{Binding Name}"
                                                    FontWeight="SemiBold"
                                                    FontSize="17"
-                                                   Foreground="{StaticResource InkBrush}"
-                                                   TextTrimming="CharacterEllipsis" />
-                                        <TextBlock Text="{Binding Description}"
-                                                   Foreground="{StaticResource MutedBrush}"
-                                                   FontSize="13"
+                                                   Foreground="White"
                                                    TextTrimming="CharacterEllipsis"
-                                                   MaxHeight="36"
-                                                   TextWrapping="Wrap"
-                                                   Margin="0,4,0,0" />
-                                    </StackPanel>
+                                                   Margin="14,28,14,14" />
+                                    </Border>
                                 </Grid>
                             </Border>
                         </Button>

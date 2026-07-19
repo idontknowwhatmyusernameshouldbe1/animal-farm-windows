@@ -36,19 +36,33 @@
             PC.
           </p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="AnimalFarm-Windows.zip" download
-              >Download for Windows</a
+            <a
+              id="download-latest"
+              class="btn btn-primary"
+              href="AnimalFarm-Windows.zip"
+              download
+              >Download latest</a
             >
           </div>
-          <p class="hero-meta">
+          <p id="latest-meta" class="hero-meta">
             Zip · Windows 10/11 (64-bit) · No .NET install needed
           </p>
+
+          <div class="version-picker" hidden>
+            <label for="version-select">Other versions</label>
+            <div class="version-row">
+              <select id="version-select" aria-label="Choose a version"></select>
+              <a id="download-version" class="btn btn-secondary" href="#" download
+                >Download</a
+              >
+            </div>
+          </div>
         </section>
 
         <section class="steps" aria-labelledby="install-title">
           <h2 id="install-title">Install</h2>
           <ol>
-            <li>Download <strong>AnimalFarm-Windows.zip</strong>.</li>
+            <li>Download the zip for the version you want.</li>
             <li>Unzip the folder anywhere you like.</li>
             <li>Open <strong>AnimalFarm.exe</strong>.</li>
           </ol>
@@ -72,5 +86,6 @@
         <span>Animal Farm for Windows</span>
       </footer>
     </div>
+    <script src="versions.js" defer></script>
   </body>
 </html>

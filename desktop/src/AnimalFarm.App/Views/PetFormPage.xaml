@@ -8,11 +8,11 @@
                        FontFamily="{StaticResource DisplayFont}"
                        FontSize="36"
                        FontWeight="Bold"
-                       Foreground="{StaticResource InkBrush}"
+                       Foreground="{DynamicResource InkBrush}"
                        TextWrapping="Wrap" />
             <TextBlock Text="{Binding Subtitle}"
                        FontSize="16"
-                       Foreground="{StaticResource MutedBrush}"
+                       Foreground="{DynamicResource MutedBrush}"
                        TextWrapping="Wrap"
                        Margin="0,8,0,28" />
 
@@ -24,8 +24,8 @@
                     BorderThickness="0"
                     Padding="0"
                     HorizontalContentAlignment="Stretch">
-                <Border Background="{StaticResource SurfaceStrongBrush}"
-                        BorderBrush="{StaticResource LineBrush}"
+                <Border Background="{DynamicResource SurfaceStrongBrush}"
+                        BorderBrush="{DynamicResource LineBrush}"
                         BorderThickness="1"
                         CornerRadius="18"
                         MinHeight="220"
@@ -38,10 +38,10 @@
                             <TextBlock Text="{Binding Localization.T.PhotoHintTitle}"
                                        FontWeight="SemiBold"
                                        FontSize="16"
-                                       Foreground="{StaticResource InkBrush}"
+                                       Foreground="{DynamicResource InkBrush}"
                                        HorizontalAlignment="Center" />
                             <TextBlock Text="{Binding Localization.T.PhotoHintBody}"
-                                       Foreground="{StaticResource MutedBrush}"
+                                       Foreground="{DynamicResource MutedBrush}"
                                        HorizontalAlignment="Center"
                                        Margin="0,6,0,0" />
                         </StackPanel>
@@ -69,7 +69,7 @@
                      Margin="0,0,0,12" />
 
             <TextBlock Text="{Binding Error}"
-                       Foreground="{StaticResource DangerBrush}"
+                       Foreground="{DynamicResource DangerBrush}"
                        TextWrapping="Wrap"
                        Margin="0,0,0,16"
                        Visibility="{Binding Error, Converter={StaticResource NullToVisibility}}" />

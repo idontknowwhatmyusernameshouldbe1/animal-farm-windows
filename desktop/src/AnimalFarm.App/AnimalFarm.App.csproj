@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
+    <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
@@ -9,6 +9,8 @@
     <ApplicationTitle>Animal Farm</ApplicationTitle>
     <RootNamespace>AnimalFarm.App</RootNamespace>
     <AssemblyName>AnimalFarm</AssemblyName>
+    <Version>1.1.0</Version>
+    <InformationalVersion>1.1.0</InformationalVersion>
   </PropertyGroup>
 
   <ItemGroup>

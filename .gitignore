@@ -6,5 +6,6 @@
 [Ll]og/
 artifacts/
 site/AnimalFarm-Windows.zip
+site/releases/*.zip
 publish/
 .DS_Store

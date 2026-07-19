@@ -38,6 +38,7 @@ public partial class App : Application
         services.AddSingleton<ImageService>();
         services.AddSingleton<PetService>();
         services.AddSingleton<SettingsService>();
+        services.AddSingleton<ThemeService>();
         services.AddSingleton<LocalizationService>();
         services.AddSingleton<NavigationService>();
         services.AddSingleton<PageFactory>();

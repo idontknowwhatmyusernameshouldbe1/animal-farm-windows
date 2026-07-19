@@ -23,9 +23,19 @@ After deploy, open:
 5. Repo **Settings → Pages**:
    - **Source:** Deploy from a branch
    - **Branch:** `gh-pages` / `/ (root)`
-6. Open the Pages URL and use **Download for Windows**.
+6. Open the Pages URL and use **Download latest** (or pick an older build from **Other versions**).
 
 Update the “Web gallery” link in [`site/index.html`](site/index.html) if your GitHub username differs.
+
+## Versions
+
+Each deploy publishes:
+
+- `AnimalFarm-Windows.zip` — always the latest
+- `releases/AnimalFarm-Windows-{version}.zip` — kept for the version selector
+- `versions.json` — list used by the site
+
+Bump `<Version>` in `desktop/src/AnimalFarm.App/AnimalFarm.App.csproj` (and the same in `animal-farm-windows-app`) when you ship a new build.
 
 ## What the workflow builds
 
